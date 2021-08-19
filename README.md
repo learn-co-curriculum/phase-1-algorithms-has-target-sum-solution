@@ -8,6 +8,10 @@
 
 ## Introduction
 
+Hopefully you were able to get a working solution going for this problem! It's a
+tricky one, but the more you practice your process, the easier it will be to
+solve similar problems in the future.
+
 Once again, we'll walk through a couple solutions to this problem using the
 problem solving approach and discuss the tradeoffs for each solution. Here's the
 original problem statement:
@@ -42,7 +46,8 @@ Note that this description of the problem highlights the inputs and output
 
 Next, let's write a few test cases. Once again, let's consider what
 [edge cases][] might come up. Can our algorithm handle negative numbers? What if
-more than one pair of numbers add up to the target?
+more than one pair of numbers add up to the target? What about arrays with just
+a single number?
 
 [edge cases]: https://www.geeksforgeeks.org/dont-forget-edge-cases/
 
@@ -65,13 +70,20 @@ if (require.main === module) {
 
   console.log("");
 
+  console.log("");
   // Negative numbers?
   console.log("Expecting: true");
   console.log("=>", hasTargetSum([-7, 10, 4, 8], 3));
 
+  console.log("");
   // Multiple pairs?
   console.log("Expecting: true");
   console.log("=>", hasTargetSum([1, 2, 3, 4], 5));
+
+  console.log("");
+  // Single numbers?
+  console.log("Expecting: false");
+  console.log("=>", hasTargetSum([4], 4));
 }
 ```
 
@@ -132,7 +144,7 @@ function hasTargetSum(array, target) {
 
 Now's a good time to check if our implementation passes all of our test cases.
 Running `node index.js` will check that all the tests cases match our
-expectations. Now it's time to refactor!
+expectations. If our code works, it's time to refactor!
 
 ### 5. Make It Clean and Readable
 
@@ -164,13 +176,11 @@ down the steps like this:
 
 ```js
 function hasTargetSum(array, target) {
-  // n steps (depending on the length of the input array)
   for (let i = 0; i < array.length; i++) {
-    // 1 step
+    // n steps (depending on the length of the input array)
     const compliment = target - array[i];
-    // n * n steps (nested loop!)
     for (let j = i + 1; j < array.length; j++) {
-      // 1 step
+      // n * n steps (nested loop!)
       if (array[j] === compliment) return true;
     }
   }
@@ -210,9 +220,11 @@ function findSock(object) {
 How can we apply this approach to our `hasTargetSum` problem? As we iterate
 through the numbers in the array, we can create a new object as part of our
 algorithm to keep track of all the numbers we've already seen. Then, on the next
-iteration, we can see if any of those numbers is a compliment to our number (if
-it adds up to the target number). Let's see what this alternate approach would
-look like in pseudocode:
+iteration, we can see if any of the numbers contained in our object is a
+compliment to the number we're iterating over (if it adds up to the target
+number).
+
+Let's see what this alternate approach would look like in pseudocode:
 
 ```txt
 create an object to keep track of all the numbers we've seen
@@ -257,13 +269,12 @@ version:
 function hasTargetSum(array, target) {
   // 1 step
   const seenNumbers = {};
-  // n steps
   for (const number of array) {
-    // 1 step
+    // n steps
     const compliment = target - number;
-    // 1 step
+    // n steps
     if (seenNumbers[compliment]) return true;
-    // 1 step
+    // n steps
     seenNumbers[number] = true;
   }
   // 1 step
@@ -271,8 +282,8 @@ function hasTargetSum(array, target) {
 }
 ```
 
-The biggest factor here is `O(n)`, so this refactor has improved the time
-complexity significantly!
+Here, we end up with `O(3n + 2)` steps, which can be simplified to `O(n)`. So
+this refactor has improved the time complexity significantly!
 
 In terms of space complexity, we are creating a new data structure `seenNumbers`
 that will grow in proportion to the size of the input array, so our space
@@ -292,7 +303,7 @@ A `Set` is a very useful data structure to know for solving algorithm problems â
 any time you need to keep track of a list of unique values, it's a good data
 structure to consider! In our case, it's a bit more straightforward to use than
 an object, since an object is really meant for storing key-value pairs, and all
-we really care about are the keys. Here's how we can use it:
+we really care about are the keys. Here's how we can use a `Set`:
 
 ```js
 function hasTargetSum(array, target) {
@@ -328,9 +339,9 @@ to apply different strategies to solve problems more efficiently.
 ## Resources
 
 The problem we just solved is a variation of a very common algorithm problem:
-the [Two Sum][two sum] problem. See if you can solve that using a similar
-technique to what we came up with for this problem. Here are a few videos that
-talk through solutions to this algorithm:
+the [Two Sum][two sum] problem. See if you can solve that version of the problem
+using a similar technique to what we came up with for this problem. Here are a
+few videos that talk through solutions to this algorithm:
 
 [two sum]: https://leetcode.com/problems/two-sum/
 
