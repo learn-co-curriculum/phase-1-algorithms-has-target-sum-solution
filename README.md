@@ -20,6 +20,8 @@ original problem statement:
 > The function should return true if any pair of numbers in the array add up to
 > the target number.
 
+<!-- TODO: Add video walkthrough -->
+
 ### 1. Rewrite the Problem in Your Own Words
 
 We'll start by rewriting the problem in a different way to make sure we
