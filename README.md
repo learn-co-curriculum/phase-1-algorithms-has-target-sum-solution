@@ -31,13 +31,11 @@ original problem statement:
 We'll start by rewriting the problem in a different way to make sure we
 understand it:
 
-```txt
-I need to make a hasTargetSum function that checks if two numbers in an array
-add up to some target number. For example, if the array is [1,2,3,4] and the
-target number is 6, I know that 2 and 4 add up to 6, so I should return true.
-If I have the same array and the target is 10, no two numbers add up to 10, so
-I should return false.
-```
+> I need to make a `hasTargetSum` function that checks if two numbers in an
+> array add up to some target number. For example, if the array is `[1,2,3,4]`
+> and the target number is `6`, I know that `2` and `4` add up to `6`, so I
+> should return `true`. If I have the same array and the target is `10`, no two
+> numbers in the array add up to `10`, so I should return `false`.
 
 Note that this description of the problem highlights the inputs and output
 (return value), and gives us some ideas to explore later in our pseudocode.
@@ -219,11 +217,12 @@ function findSock(object) {
 ```
 
 How can we apply this approach to our `hasTargetSum` problem? As we iterate
-through the numbers in the array, we can create a new object as part of our
-algorithm to keep track of all the numbers we've already seen. Then, on the next
-iteration, we can see if any of the numbers contained in our object is a
-complement to the number we're iterating over (if it adds up to the target
-number).
+through the numbers in the array, we can create a **new object** as part of our
+algorithm to keep track of all the numbers we've already seen as **keys** on the
+object, so we can quickly check if the object has a key that we're looking for.
+Then, on the next iteration, we can see if one of the numbers we've added as a
+key to our object is a complement to the number we're iterating over (if it adds
+up to the target number).
 
 Let's see what this alternate approach would look like in pseudocode:
 
