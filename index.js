@@ -1,9 +1,9 @@
 function hasTargetSum(array, target) {
   const seenNumbers = new Set();
   for (const number of array) {
-    const compliment = target - number;
+    const complement = target - number;
 
-    if (seenNumbers.has(compliment)) return true;
+    if (seenNumbers.has(complement)) return true;
 
     seenNumbers.add(number);
   }
