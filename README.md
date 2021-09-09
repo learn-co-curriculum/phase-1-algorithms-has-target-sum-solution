@@ -21,7 +21,7 @@ original problem statement:
 > - an `array` of integers
 > - a `target` integer
 >
-> The function should return true if any pair of numbers in the array add up to
+> The function should return true if any pair of numbers in the array adds up to
 > the target number.
 
 <!-- TODO: Add video walkthrough -->
@@ -46,7 +46,7 @@ Note that this description of the problem highlights the inputs and output
 
 Next, let's write a few test cases. Once again, let's consider what
 [edge cases][] might come up. Can our algorithm handle negative numbers? What if
-more than one pair of numbers add up to the target? What about arrays with just
+more than one pair of numbers adds up to the target? What about arrays with just
 a single number?
 
 [edge cases]: https://www.geeksforgeeks.org/dont-forget-edge-cases/
@@ -95,10 +95,10 @@ out our solution.
 
 ```txt
 iterate over the array of numbers
-  for the current number, identify a complimentary number that adds to our target
-  (for example: if our number is 2, and the target is 5, the complimentary number is 3)
+  for the current number, identify a complementary number that adds to our target
+  (for example: if our number is 2, and the target is 5, the complementary number is 3)
   iterate over the remaining numbers in the array
-    check if any of the remaining numbers is the compliment
+    check if any of the remaining numbers is the complement
       if so, return true
 if we reach the end of the array, return false
 ```
@@ -112,10 +112,10 @@ Here's the code we are given to start, with the pseudocode added in as comments:
 ```js
 function hasTargetSum(array, target) {
   // iterate over the array of numbers
-  //   for the current number, identify a complimentary number that adds to our target
-  //   (for example: if our number is 2, and the target is 5, the complimentary number is 3)
+  //   for the current number, identify a complementary number that adds to our target
+  //   (for example: if our number is 2, and the target is 5, the complementary number is 3)
   //   iterate over the remaining numbers in the array
-  //     check if any of the remaining numbers is the compliment
+  //     check if any of the remaining numbers is the complement
   //       if so, return true
   // if we reach the end of the array, return false
 }
@@ -127,14 +127,14 @@ Let's fill in the code based on this pseudocode:
 function hasTargetSum(array, target) {
   // iterate over the array of numbers
   for (let i = 0; i < array.length; i++) {
-    // for the current number, identify a complimentary number that adds to our target
-    // (for example: if our number is 2, and the target is 5, the complimentary number is 3)
-    const compliment = target - array[i];
+    // for the current number, identify a complementary number that adds to our target
+    // (for example: if our number is 2, and the target is 5, the complementary number is 3)
+    const complement = target - array[i];
     // iterate over the remaining numbers in the array
     for (let j = i + 1; j < array.length; j++) {
-      // check if any of the remaining numbers is the compliment
+      // check if any of the remaining numbers is the complement
       // if so, return true
-      if (array[j] === compliment) return true;
+      if (array[j] === complement) return true;
     }
   }
   // if we reach the end of the array, return false
@@ -143,7 +143,7 @@ function hasTargetSum(array, target) {
 ```
 
 Now's a good time to check if our implementation passes all of our test cases.
-Running `node index.js` will check that all the tests cases match our
+Running `node index.js` will check that all the test cases match our
 expectations. If our code works, it's time to refactor!
 
 ### 5. Make It Clean and Readable
@@ -157,9 +157,9 @@ obvious at a glance?
 ```js
 function hasTargetSum(array, target) {
   for (let i = 0; i < array.length; i++) {
-    const compliment = target - array[i];
+    const complement = target - array[i];
     for (let j = i + 1; j < array.length; j++) {
-      if (array[j] === compliment) return true;
+      if (array[j] === complement) return true;
     }
   }
   return false;
@@ -178,10 +178,10 @@ down the steps like this:
 function hasTargetSum(array, target) {
   for (let i = 0; i < array.length; i++) {
     // n steps (depending on the length of the input array)
-    const compliment = target - array[i];
+    const complement = target - array[i];
     for (let j = i + 1; j < array.length; j++) {
       // n * n steps (nested loop!)
-      if (array[j] === compliment) return true;
+      if (array[j] === complement) return true;
     }
   }
   // 1 step
@@ -193,15 +193,16 @@ Since our **inner loop** performs `n` iterations for every iteration of the
 **outer loop**, we end up with `O(n * n)` or `O(n²)` (quadratic) for the _time
 complexity_ of this algorithm.
 
-In terms of _space complexity_, we don't need to create any additional data
-structures to store information, so we end up with `O(1)`.
+In terms of _space complexity_, the amount of memory needed grows linearly with
+the size of the input array. We don't need to create any additional data
+structures to store information. So we end up with `O(n)`.
 
 How can we optimize? Is there any way we can avoid a quadratic runtime?
 
 Think back to the different versions of our sock-finding algorithm. One way we
 were able to make our algorithm more efficient was by changing the way our data
-was stored. By using an object instead of an array to store data, we can improve
-the runtime of searching through data from `O(n)` to `O(1)`:
+was stored. By using an **object** instead of an **array** to store data, we can
+improve the runtime of _searching_ through data from `O(n)` to `O(1)`:
 
 ```js
 // O(n) runtime
@@ -221,7 +222,7 @@ How can we apply this approach to our `hasTargetSum` problem? As we iterate
 through the numbers in the array, we can create a new object as part of our
 algorithm to keep track of all the numbers we've already seen. Then, on the next
 iteration, we can see if any of the numbers contained in our object is a
-compliment to the number we're iterating over (if it adds up to the target
+complement to the number we're iterating over (if it adds up to the target
 number).
 
 Let's see what this alternate approach would look like in pseudocode:
@@ -229,9 +230,9 @@ Let's see what this alternate approach would look like in pseudocode:
 ```txt
 create an object to keep track of all the numbers we've seen
 iterate over the array of numbers
-  for the current number, identify a complimentary number that adds to our target
-  (for example: if our number is 2, and the target is 5, the complimentary number is 3)
-  check if any of the keys in our object is the compliment to the current number
+  for the current number, identify a complementary number that adds to our target
+  (for example: if our number is 2, and the target is 5, the complementary number is 3)
+  check if any of the keys in our object is the complement to the current number
     if so, return true
   save the current number as the key on our object so we can check it later against other numbers
 if we reach the end of the array, return false
@@ -248,12 +249,12 @@ function hasTargetSum(array, target) {
   const seenNumbers = {};
   // iterate over the array of numbers
   for (const number of array) {
-    // for the current number, identify a complimentary number that adds to our target
-    // (for example: if our number is 2, and the target is 5, the complimentary number is 3)
-    const compliment = target - number;
-    // check if any of the keys in our object is the compliment to the current number
+    // for the current number, identify a complementary number that adds to our target
+    // (for example: if our number is 2, and the target is 5, the complementary number is 3)
+    const complement = target - number;
+    // check if any of the keys in our object is the complement to the current number
     // if so, return true
-    if (seenNumbers[compliment]) return true;
+    if (seenNumbers[complement]) return true;
     // save the current number as the key on our object so we can check it later against other numbers
     seenNumbers[number] = true;
   }
@@ -271,9 +272,9 @@ function hasTargetSum(array, target) {
   const seenNumbers = {};
   for (const number of array) {
     // n steps
-    const compliment = target - number;
+    const complement = target - number;
     // n steps
-    if (seenNumbers[compliment]) return true;
+    if (seenNumbers[complement]) return true;
     // n steps
     seenNumbers[number] = true;
   }
@@ -309,10 +310,10 @@ we really care about are the keys. Here's how we can use a `Set`:
 function hasTargetSum(array, target) {
   const seenNumbers = new Set(); // initialize an empty Set
   for (const number of array) {
-    const compliment = target - number;
+    const complement = target - number;
 
-    // .has returns true if the Set includes the compliment
-    if (seenNumbers.has(compliment)) return true;
+    // .has returns true if the Set includes the complement
+    if (seenNumbers.has(complement)) return true;
 
     // .add adds the number to the Set
     seenNumbers.add(number);
@@ -329,9 +330,9 @@ Our final solution has:
 ## Conclusion
 
 When solving algorithm problems, coming up with a more efficient solution often
-involves reframing the problem and looking for patterns to similar problems that
-you may have seen before. The second solution we came up with isn't something a
-lot of developers come up with on the first attempt, and it's better to get a
+involves reframing the problem, and recognizing patterns that you may have seen
+before in similar problems. The second solution we came up with isn't something
+a lot of developers come up with on the first attempt, and it's better to get a
 slow (but working!) solution on paper before trying to optimize. But the more
 practice you get, the more you'll see these common patterns emerge and be able
 to apply different strategies to solve problems more efficiently.
