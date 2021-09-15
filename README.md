@@ -24,7 +24,9 @@ original problem statement:
 > The function should return true if any pair of numbers in the array adds up to
 > the target number.
 
-<!-- TODO: Add video walkthrough -->
+### Video Walkthrough
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LrXwQ6CFrkA?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
 ### 1. Rewrite the Problem in Your Own Words
 
